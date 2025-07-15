@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <SelectDialog
+    id="customerDialog"
+    title="Selecionar Cliente"
+    search=".onCustomerSearch"
+    confirm=".onCustomerSelect"
+    cancel=".onCustomerCancel"
+    items="{
+      path: '/CustomersSet',
+      sorter: { path: 'Razao_Social' }
+    }">
+    <StandardListItem id="ListItem"
+      title="{Razao_Social}"
+      description="{Cod_Cliente}"
+      icon="sap-icon://customer"
+      type="Active" />
+  </SelectDialog>
+</core:FragmentDefinition>
