@@ -1,1 +1,11 @@
-/* Enter your custom styles here */
+.tileLayout {
+	float: top;
+}
+
+.FiltersBoxes {
+    border: 2px solid #dfdfdf;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 2px #dfdfdf;
+}

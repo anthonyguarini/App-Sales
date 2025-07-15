@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <SelectDialog
+    id="vendorDialog"
+    title="Selecionar Vendedor"
+    search=".onVendorSearch"
+    confirm=".onVendorSelect"
+    cancel=".onVendorCancel"
+    items="{
+      path: '/SalesHierarchySet',
+      sorter: { path: 'Nome_Representante' }
+    }">
+    <StandardListItem id="ListItemVendor"
+      title="{Nome_Representante}"
+      description="{Cod_Representante}"
+      icon="sap-icon://supplier"
+      type="Active" />
+  </SelectDialog>
+</core:FragmentDefinition>

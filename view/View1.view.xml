@@ -1,32 +1,59 @@
 <mvc:View controllerName="zappsales.controller.View1"
+    xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:t="sap.ui.table"
-    xmlns="sap.m"
 	xmlns:core="sap.ui.core"
 	core:require="{DateType: 'sap/ui/model/type/Date'}"
-    xmlns:l="sap.ui.layout">
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
     
     <Page id="page" title="{i18n>title}">
 
-        <VBox id="BoxClient" class="sapUiTinyMargin">
+	    <GenericTile id="TileTtVend" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Cumulative Totals" subheader="Expenses" press="onPress" >
+		    <TileContent id="ContentTtVend" unit="Unit" footer="Footer Text">
+			    <NumericContent id="NumericTtVend" value="1762" icon="sap-icon://line-charts" withMargin="false" />
+		    </TileContent>
+	    </GenericTile>
 
-            <l:VerticalLayout id="FindClient" class="sapUiContentPadding" width="100%">
-		        <Label id="Fclient" text="Cliente" labelFor="ClientInput" />
-		        <Input
-			        id="ClientInput" textFormatMode="KeyValue" placeholder="Especificar cliente"
-			        showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest"
-			        suggestionItems="{/CustomersSet}" suggestionItemSelected=".onSuggestionCustomerSelected">
-			        <suggestionItems>
-				        <core:ListItem id="ListCust"
-					        key="{Cod_Cliente}"
-					        text="{Razao_Social}"
-					        additionalText="{Cod_Cliente}" />
-			        </suggestionItems>
-		        </Input>
-		        <Label id="ItemSelected" text="Cliente Selecionado" labelFor="selectedKey" />
-		        <Text id="selectedKeyIndicator" />
-	        </l:VerticalLayout>
-        </VBox>
+        <content>
+
+            <HBox id="Filters" justifyContent="SpaceBetween" class="sapUiSmallMargin">
+                <VBox id="BoxVendor" class="FiltersBoxes" width="70%">
+                    <l:VerticalLayout id="FindVendor" class="sapUiContentPadding" width="100%">
+                        <Label id="Fvendor" text="Vendedor" labelFor="VendorInput"/>
+                        <Input 
+                            id="VendorInput" textFormatMode="KeyValue" placeholder="Especificar Vendedor"
+                            showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequestVendor"
+                            suggestionItems="{/SalesHierarchy}" suggestionItemSelected=".onSuggestionVendorSelected" width="100%">
+                            <suggestionItems>
+                                <core:ListItem id="ListVend"
+                                    key="{Cod_Representante}"
+                                    text="{Nome_Representante}"
+                                    additionalText="{Cod_Representante}" />
+                            </suggestionItems>
+                        </Input>    
+                    </l:VerticalLayout>
+                <Button id="ButtonFilter" text="Filtrar dados" press=".onPressFilter"/>
+                </VBox>
+
+                <VBox id="BoxClient" class="FiltersBoxes" width="80%" >
+                    <l:VerticalLayout id="FindClient" class="sapUiContentPadding" width="100%">
+                        <Label id="Fclient" text="Cliente" labelFor="ClientInput" />
+                        <Input
+                            id="ClientInput" textFormatMode="KeyValue" placeholder="Especificar cliente"
+                            showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest"
+                            suggestionItems="{/CustomersSet}" suggestionItemSelected=".onSuggestionCustomerSelected" width="60%">
+                            <suggestionItems>
+                                <core:ListItem id="ListCust"
+                                    key="{Cod_Cliente}"
+                                    text="{Razao_Social}"
+                                    additionalText="{Cod_Cliente}" />
+                            </suggestionItems>
+                        </Input>          
+                    </l:VerticalLayout>
+                </VBox>
+            </HBox>
+        </content>
 
         <t:Table id="table1"
             rows="{/SoldDocumentsSet}"
