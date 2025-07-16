@@ -5,129 +5,143 @@
 	xmlns:core="sap.ui.core"
 	core:require="{DateType: 'sap/ui/model/type/Date'}"
     xmlns:l="sap.ui.layout"
+    xmlns:f="sap.f"
     xmlns:form="sap.ui.layout.form">
     
-    <Page id="page" title="{i18n>title}">
+    <f:DynamicPage id="dynamicPageId" preserveHeaderStateOnScroll="true" showFooter="true" fitContent="true">
+        <f:header>
+            <f:DynamicPageHeader id="dynamycPageHeaderId" pinnable="true">
+                <f:content>
+	                <GenericTile id="TileTtVend" class="tileLayout defaultLayoutTiles" header="Total Vendido" subheader="Carteira e Faturamento" press="onPress">
+		                <TileContent id="ContentTtVend" unit="Unit" footer="Footer Text">
+			                <NumericContent id="NumericTtVend" value="5000.00" icon="sap-icon://line-charts" withMargin="false" />
+		                </TileContent>
+	                </GenericTile>                    
+	                <GenericTile id="TileTtFat" class="tileLayout defaultLayoutTiles" header="Total Faturado" subheader="Faturado no Mês" press="onPress">
+		                <TileContent id="ContentTtFat" unit="Unit" footer="Footer Text">
+			                <NumericContent id="NumericTtFat" value="2600.00" icon="sap-icon://line-charts" withMargin="false" />
+		                </TileContent>
+	                </GenericTile>      
+	                <GenericTile id="TileTtCart" class="tileLayout defaultLayoutTiles" header="Carteira" subheader="3M Carteira" press="onPress">
+		                <TileContent id="ContentTtCart" unit="Unit" footer="Footer Text">
+			                <NumericContent id="NumericTtCart" value="2400.00" icon="sap-icon://line-charts" withMargin="false" />
+		                </TileContent>
+	                </GenericTile>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
 
-	    <GenericTile id="TileTtVend" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Cumulative Totals" subheader="Expenses" press="onPress" >
-		    <TileContent id="ContentTtVend" unit="Unit" footer="Footer Text">
-			    <NumericContent id="NumericTtVend" value="1762" icon="sap-icon://line-charts" withMargin="false" />
-		    </TileContent>
-	    </GenericTile>
-
-        <content>
-
-            <HBox id="Filters" justifyContent="SpaceBetween" class="sapUiSmallMargin">
-                <VBox id="BoxVendor" class="FiltersBoxes" width="70%">
-                    <l:VerticalLayout id="FindVendor" class="sapUiContentPadding" width="100%">
-                        <Label id="Fvendor" text="Vendedor" labelFor="VendorInput"/>
-                        <Input 
-                            id="VendorInput" textFormatMode="KeyValue" placeholder="Especificar Vendedor"
-                            showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequestVendor"
-                            suggestionItems="{/SalesHierarchy}" suggestionItemSelected=".onSuggestionVendorSelected" width="100%">
-                            <suggestionItems>
-                                <core:ListItem id="ListVend"
-                                    key="{Cod_Representante}"
-                                    text="{Nome_Representante}"
-                                    additionalText="{Cod_Representante}" />
-                            </suggestionItems>
-                        </Input>    
-                    </l:VerticalLayout>
-                <Button id="ButtonFilter" text="Filtrar dados" press=".onPressFilter"/>
-                </VBox>
-
-                <VBox id="BoxClient" class="FiltersBoxes" width="80%" >
-                    <l:VerticalLayout id="FindClient" class="sapUiContentPadding" width="100%">
-                        <Label id="Fclient" text="Cliente" labelFor="ClientInput" />
-                        <Input
-                            id="ClientInput" textFormatMode="KeyValue" placeholder="Especificar cliente"
-                            showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest"
-                            suggestionItems="{/CustomersSet}" suggestionItemSelected=".onSuggestionCustomerSelected" width="60%">
-                            <suggestionItems>
-                                <core:ListItem id="ListCust"
-                                    key="{Cod_Cliente}"
-                                    text="{Razao_Social}"
-                                    additionalText="{Cod_Cliente}" />
-                            </suggestionItems>
-                        </Input>          
-                    </l:VerticalLayout>
-                </VBox>
-            </HBox>
-        </content>
-
-        <t:Table id="table1"
-            rows="{/SoldDocumentsSet}"
-            visibleRowCount="30"
-            threshold="10"
-            class="sapUiTinyMargin"
-            selectionMode="MultiToggle">
-            <t:toolbar>
-                <OverflowToolbar id="Toolbar">
-                    <Title id="title" text="Listgem de Pedidos"></Title>
-                </OverflowToolbar>
-            </t:toolbar>
-            <t:columns>
-                <t:Column id="CodPedido" width="8rem" hAlign="Center" sortProperty="Cod_Pedido">
-                    <Label id="LabelCodPedido" text="Pedido" />
-                    <t:template>
-                        <Text id="TempCodPedido" text="{Cod_Pedido}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column id="DataPedido" width="10rem" hAlign="Center" sortProperty="Data_Pedido">
-                    <Label id="LabelDataPedido" text="Data do pedido"/>
-                    <t:template>
-                        <Text id="TempDataPedido" text="{Data_Pedido}"/>
-                    </t:template>
-                </t:Column>
-                <t:Column id="NFe" width="8rem" sortProperty="NFe">
-                    <Label id="LabelNFe" text="NFe" />
-                    <t:template>
-                        <Text id="TempNFe" text="{NFe}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column id="DataFaturamento" width="8rem" sortProperty="Data_Faturamento">
-                    <Label id="LabelDataFaturamento" text="Data do Faturamento" />
-                    <t:template>
-                        <Text id="TempDataFat" text="{Data_Faturamento}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column id="CodCliente" width="8rem" sortProperty="Cod_Cliente" filterProperty="Cod_Cliente" autoResizable="true">
-                    <Label id="LabelCodCliente" text="Cliente" />
-                    <t:template>
-                        <Text id="TempCodCliente" text="{Cod_Cliente}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column id="CodRepresentante" width="8rem" sortProperty="Cod_Representante" filterProperty="Cod_Representante" autoResizable="true">
-                    <Label id="LabelCodRepresentante" text="Representante" />
-                    <t:template>
-                        <Text id="TempCodRepresentante" text="{Cod_Representante}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column id="CodMaterial" width="8rem" sortProperty="Cod_Material" filterProperty="Cod_Material" autoResizable="true">
-                    <Label id="LabelCodMaterial" text="Material" />
-                    <t:template>
-                        <Text id="TempCodMaterial" text="{Cod_Material}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column id="Qtde" width="8rem" sortProperty="Qtde" filterProperty="Qtde" autoResizable="true">
-                    <Label id="LabelQtde" text="Quantidade" />
-                    <t:template>
-                        <Text id="TempQtde" text="{Qtde}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column id="VlrProduto" width="8rem" sortProperty="Vlr_Produto" filterProperty="Vlr_Produto" autoResizable="true">
-                    <Label id="LabelVlrProduto" text="Vlr Produt." />
-                    <t:template>
-                        <Text id="TempVlrProduto" text="{Vlr_Produto}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-                <t:Column id="Status" width="12rem" sortProperty="Status" filterProperty="Status" autoResizable="true">
-                    <Label id="LabelStatus" text="Status" />
-                    <t:template>
-                        <Text id="TempStatus" text="{Status}" wrapping="false" />
-                    </t:template>
-                </t:Column>
-            </t:columns>
-        </t:Table>    
-    </Page>
+        <f:content>
+            <VBox id="PageMain" class="sapUiSmallMargin">
+                <HBox id="Filters">
+                    <VBox id="BoxVendor" class="FiltersBoxes defaultLayoutTiles">
+                        <l:VerticalLayout id="FindVendor" class="sapUiContentPadding" width="100%">
+                            <Label id="Fvendor" text="Vendedor" labelFor="VendorInput"/>
+                                <Input id="VendorInput" textFormatMode="KeyValue" placeholder="Especificar Vendedor"
+                                    showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequestVendor"
+                                    suggestionItems="{/SalesHierarchy}" suggestionItemSelected=".onSuggestionVendorSelected" width="100%">
+                                    <suggestionItems>
+                                        <core:ListItem 
+                                            id="ListVend" 
+                                            key="{Cod_Representante}"
+                                            text="{Nome_Representante}"
+                                            additionalText="{Cod_Representante}" />
+                                    </suggestionItems>
+                                </Input>    
+                        </l:VerticalLayout>
+                    </VBox>
+                    <VBox id="BoxClient" class="FiltersBoxes defaultLayoutTiles">
+                        <l:VerticalLayout id="FindClient" class="sapUiContentPadding" width="100%">
+                            <Label id="Fclient" text="Cliente" labelFor="ClientInput" />
+                                <Input id="ClientInput" textFormatMode="KeyValue" placeholder="Especificar cliente"
+                                    showSuggestion="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequest"
+                                    suggestionItems="{/CustomersSet}" suggestionItemSelected=".onSuggestionCustomerSelected" width="100%">
+                                    <suggestionItems>
+                                        <core:ListItem id="ListCust"
+                                            key="{Cod_Cliente}"
+                                            text="{Razao_Social}"
+                                            additionalText="{Cod_Cliente}" />
+                                    </suggestionItems>
+                                </Input>          
+                        </l:VerticalLayout>
+                    </VBox>
+                </HBox>
+        
+                <t:Table id="table1"
+                    rows="{/SoldDocumentsSet}"
+                    visibleRowCount="30"
+                    threshold="10"
+                    class="sapUiTinyMargin"
+                    selectionMode="MultiToggle">
+                    <t:toolbar>
+                        <OverflowToolbar id="Toolbar">
+                            <Title id="title" text="Listgem de Pedidos"></Title>
+                        </OverflowToolbar>
+                    </t:toolbar>
+                    <t:columns>
+                        <t:Column id="CodPedido" width="8rem" hAlign="Center" sortProperty="Cod_Pedido">
+                            <Label id="LabelCodPedido" text="Pedido" />
+                            <t:template>
+                                <Text id="TempCodPedido" text="{Cod_Pedido}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="DataPedido" width="10rem" hAlign="Center" sortProperty="Data_Pedido">
+                            <Label id="LabelDataPedido" text="Data do pedido"/>
+                            <t:template>
+                                <Text id="TempDataPedido" text="{Data_Pedido}"/>
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="NFe" width="8rem" sortProperty="NFe">
+                            <Label id="LabelNFe" text="NFe" />
+                            <t:template>
+                                <Text id="TempNFe" text="{NFe}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="DataFaturamento" width="8rem" sortProperty="Data_Faturamento">
+                            <Label id="LabelDataFaturamento" text="Data do Faturamento" />
+                            <t:template>
+                                <Text id="TempDataFat" text="{Data_Faturamento}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="CodCliente" width="8rem" sortProperty="Cod_Cliente" filterProperty="Cod_Cliente" autoResizable="true">
+                            <Label id="LabelCodCliente" text="Cliente" />
+                            <t:template>
+                                <Text id="TempCodCliente" text="{Cod_Cliente}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="CodRepresentante" width="8rem" sortProperty="Cod_Representante" filterProperty="Cod_Representante" autoResizable="true">
+                            <Label id="LabelCodRepresentante" text="Representante" />
+                            <t:template>
+                                <Text id="TempCodRepresentante" text="{Cod_Representante}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="CodMaterial" width="8rem" sortProperty="Cod_Material" filterProperty="Cod_Material" autoResizable="true">
+                            <Label id="LabelCodMaterial" text="Material" />
+                            <t:template>
+                                <Text id="TempCodMaterial" text="{Cod_Material}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="Qtde" width="8rem" sortProperty="Qtde" filterProperty="Qtde" autoResizable="true">
+                            <Label id="LabelQtde" text="Quantidade" />
+                            <t:template>
+                                <Text id="TempQtde" text="{Qtde}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="VlrProduto" width="8rem" sortProperty="Vlr_Produto" filterProperty="Vlr_Produto" autoResizable="true">
+                            <Label id="LabelVlrProduto" text="Vlr Produt." />
+                            <t:template>
+                                <Text id="TempVlrProduto" text="{Vlr_Produto}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                        <t:Column id="Status" width="12rem" sortProperty="Status" filterProperty="Status" autoResizable="true">
+                            <Label id="LabelStatus" text="Status" />
+                            <t:template>
+                                <Text id="TempStatus" text="{Status}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+                    </t:columns>
+                </t:Table>    
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>
