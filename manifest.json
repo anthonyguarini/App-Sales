@@ -44,12 +44,23 @@
     }
   },
   "sap.ui5": {
+      "config": {
+        "zappsales":{
+          "files":[
+            "./view/View1.view.xml",
+            "./delegates/tableSalesDelegate.js",
+            "manifest.json"   
+          ]
+        }
+      },
     "flexEnabled": true,
     "dependencies": {
       "minUI5Version": "1.123.1",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+				"sap.ui.mdc": {},
+				"sap.ui.table": {}
       }
     },
     "contentDensities": {
